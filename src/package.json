@@ -1,0 +1,5 @@
+{
+  "name": "js-oauth-twitter",
+  "description": "A javascript Twitter client library implimenting the OAuth protocol",
+  "author": "Rob Griffiths (rob@bytespider.eu)"
+}
