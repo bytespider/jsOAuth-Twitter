@@ -171,13 +171,13 @@
         /**
          * Makes a request to varify the authenticated user's credentials
          *
+         * @param success {object} callback for a sucessful request
+         * @param failure {object} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *
          * @see https://dev.twitter.com/docs/api/1/get/account/verify_credentials
          */
-        verifyCredentials: function (options)
+        verifyCredentials: function (success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
@@ -197,12 +197,12 @@
          * Returns the 20 most recent statuses, including retweets if they
          * exist, posted by the authenticating user and the user's they follow.
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
+         *      sinceId {integer} id of the last tweet
          *      count {integer}
          *      page {integer}
-         *      sinceId {integer}
          *      maxId {integer}
          *      trimUser {boolean}
          *      includeRetweets {boolean}
@@ -212,12 +212,14 @@
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/home_timeline
          */
-        homeTimeline: function (options)
+        homeTimeline: function (sinceId, success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_HOME_TIMELINE + '.' +
                       OAuth.Twitter.API_FORMAT;
+
+            options.sinceid = sinceId;
 
             var allowed_options = {
                 'sinceId': 'since_id',
@@ -249,13 +251,12 @@
         /**
          * Returns the 20 most recent statuses posted by the named user
          *
+         * @param screenName {string|integer} the screen name or user id of the user
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      count {integer}
          *      page {integer}
-         *      screenName {string}
-         *      userId {integer}
          *      sinceId {integer}
          *      maxId {integer}
          *      trimUser {boolean}
@@ -266,12 +267,22 @@
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/user_timeline
          */
-        userTimeline: function (options)
+        userTimeline: function (screenName, sinceId, success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_USER_TIMELINE + '.' +
                       OAuth.Twitter.API_FORMAT;
+                      
+            var userId = parseInt(screenName, 10);
+            if (userId == screenName)
+            {
+                options.userId = userId;
+            }
+            else
+            {
+                options.screenName = screenName;
+            }
 
             var allowed_options = {
                 'screenName': 'screen_name',
@@ -305,16 +316,16 @@
          * Returns the 20 most recent statuses, including retweets if they
          * exist, from non-protected users.
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      trimUser {boolean}
          *      includeEntities {boolean}
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/public_timeline
          */
         /*
-        publicTimeline: function (options)
+        publicTimeline: function (success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
@@ -343,9 +354,9 @@
          * Returns the 20 most recent mentions (status containing @username) for
          * the authenticating user.
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      count {integer}
          *      page {integer}
          *      sinceId {integer}
@@ -357,7 +368,7 @@
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/mentions
          */
-        mentions: function (options)
+        mentions: function (success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
@@ -394,9 +405,9 @@
          * Returns the 20 most recent direct messages sent to the authenticating
          * user.
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      count {integer}
          *      page {integer}
          *      sinceId {integer}
@@ -406,7 +417,7 @@
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/mentions
          */
-        messages: function (options)
+        messages: function (success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
@@ -438,9 +449,9 @@
          * Sends a new direct message to the specified user from the
          * authenticating user
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      count {integer}
          *      page {integer}
          *      sinceId {integer}
@@ -450,7 +461,7 @@
          *
          * @see https://dev.twitter.com/docs/api/1/post/direct_messages/new
          */
-        createMessage: function (options)
+        createMessage: function (success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
@@ -482,9 +493,9 @@
          * Sends a new direct message to the specified user from the
          * authenticating user
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      count {integer}
          *      page {integer}
          *      sinceId {integer}
@@ -494,7 +505,7 @@
          *
          * @see https://dev.twitter.com/docs/api/1/post/direct_messages/new
          */
-        showMessage: function (options)
+        showMessage: function (success, failure, options)
         {
             if (!('id' in options))
             {
@@ -520,9 +531,9 @@
          * Returns the 20 most recent tweets of the authenticated user that have
          * been retweeted by others.
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      count {integer}
          *      page {integer}
          *      sinceId {integer}
@@ -532,7 +543,7 @@
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me
          */
-        retweets: function (options)
+        retweets: function (success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
@@ -564,9 +575,9 @@
          * Returns the 20 most recent retweets posted by the authenticating
          * user.
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          *      count {integer}
          *      page {integer}
          *      sinceId {integer}
@@ -576,7 +587,7 @@
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/retweeted_by_me
          */
-        retweetsByMe: function (options)
+        retweetsByMe: function (success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
@@ -606,18 +617,23 @@
         /**
          * Updates the authenticating user's status, also known as tweeting.
          *
+         * @param status {string} string of text to use as a status
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
+         * @param options {object}
+         *      
          * @see https://dev.twitter.com/docs/api/1/post/statuses/update
-         **/
-        tweet: function (options)
+         */
+        tweet: function (status, success, failure, options)
         {
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_STATUS_UPDATE + '.' +
                       OAuth.Twitter.API_FORMAT;
 
-            if (!('status' in options))
+            if (!status)
             {
-                throw new Exception("Missing 'status' in statusUpdate");
+                throw new Exception("Missing 'status' in tweet");
             }
 
             var allowed_options = {
@@ -648,11 +664,17 @@
         /**
          * Updates the authenticating user's status and attaches media for upload.
          *
+         * @param status {string} string of text to use as a status
+         * @param media {array} array of media to upload
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
+         * @param options {object}
+         *      
          * @see https://dev.twitter.com/docs/api/1/post/statuses/update_with_media
-         **/
-        tweetWithMedia: function (options)
+         */
+        tweetWithMedia: function (status, media, success, failure, options)
         {
-            var url = OAuth.Twitter.API_URL +
+            var url = OAuth.Twitter.API_UPLOAD_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_STATUS_UPDATE_WITH_MEDIA + '.' +
                       OAuth.Twitter.API_FORMAT;
@@ -699,11 +721,16 @@
         /**
          * Retweets a tweet.
          *
+         * @param id {integer} Id of the tweet to retweet
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
+         * @param options {object}
+         *      
          * @see https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid
-         **/
-        retweet: function (options)
+         */
+        retweet: function (id, success, failure, options)
         {
-            if (!('id' in options))
+            if (!id)
             {
                 throw new Exception("Missing 'id' in retweet");
             }
@@ -735,13 +762,18 @@
         },
 
         /**
-         * Retweets a tweet.
+         * Destroys the status specified by the required ID parameter.
          *
+         * @param id {integer} Id of the tweet to delete
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
+         * @param options {object}
+         *      
          * @see https://dev.twitter.com/docs/api/1/post/statuses/destroy/%3Aid
-         **/
-        destroyTweet: function (options)
+         */
+        destroyTweet: function (id, success, failure, options)
         {
-            if (!('id' in options))
+            if (!id)
             {
                 throw new Exception("Missing 'id' in retweet");
             }
@@ -751,11 +783,6 @@
                       OAuth.Twitter.API_DESTROY_TWEET +
                       options.id + '.' +
                       OAuth.Twitter.API_FORMAT;
-
-            if (!('media' in options))
-            {
-                throw new Exception("Missing 'status' in statusUpdate");
-            }
 
             var allowed_options = {
                 'trimUser': 'trim_user',
@@ -778,13 +805,13 @@
         },
 
         /**
-         * Retweets a tweet.
+         * Returns a single status, specified by the id parameter.
          *
          * @see https://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid
-         **/
-        showTweet: function (options)
+         */
+        showTweet: function (id, success, failure, options)
         {
-            if (!('id' in options))
+            if (!id)
             {
                 throw new Exception("Missing 'id' in retweet");
             }
@@ -826,7 +853,7 @@
             /**
              * Opens a modal browser pointing to the authentication page
              *
-             **/
+             */
             showAuthenticationWindow: function (url, authenticateCallback)
             {
                 var twitter = this;
@@ -863,7 +890,7 @@
             /**
              * Closes a modal browser
              *
-             **/
+             */
             hideAuthenticationWindow: function ()
             {
                 this.UI.modalLogin.hide();
