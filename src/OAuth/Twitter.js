@@ -54,6 +54,7 @@
     /** @const */ OAuth.Twitter.API_STATUS_UPDATE = '/statuses/update';
     /** @const */ OAuth.Twitter.API_STATUS_UPDATE_WITH_MEDIA = '/statuses/update_with_media';
 
+    /** @const */ OAuth.Twitter.API_TWEET = '/statuses/retweet/';
     /** @const */ OAuth.Twitter.API_RETWEET = '/statuses/retweet/';
     /** @const */ OAuth.Twitter.API_DESTROY_TWEET = '/statuses/destroy/';
 
@@ -66,17 +67,20 @@
         /**
          * Authenticates a user
          *
+         * @param success {function} callback for a sucessful request
+         * @param failure {function} callback for a failed request
          * @param options {object}
          *      username {string} the username to log in as (xAuth Only)
          *      password {string} the password to log in as (xAuth Only)
-         *      success {function} callback for a sucessful request
-         *      failure {function} callback for a failed request
          */
-        authenticate: function (options)
+        authenticate: function (success, failure, options)
         {
+            var options = options || {};
             var twitter = this;
-            var success = options.success;
-            var failure = options.failure || undefined;
+            if (!success)
+            {
+                throw new Error("Success callback is required in authenticate()");
+            }
 
             if ('username' in options && 'password' in options)
             {
@@ -92,34 +96,15 @@
             }
             else
             {
-                var authenticateCallback = (function(event)
-                {
-                    var url = event.url;
-
-                    // close the window
-                    this.UI.hideAuthenticationWindow.call(this);
-                    var querystring = url.replace(twitter.oauth.callbackUrl + "?",  "");
-
-                    var query = twitter.oauth.parseTokenRequest(querystring);
-
-                    twitter.oauth.setVerifier(query.oauth_verifier);
-                    twitter.oauth.fetchAccessToken(function (data) {
-                        twitter.storeToken.call(twitter);
-
-                        success();
-                    }, failure);
-
-                });
-
                 // normal authentication
                 twitter.oauth.fetchRequestToken(function (url) {
-                    twitter.UI.showAuthenticationWindow.call(twitter, url, authenticateCallback);
+                    twitter.UI.showAuthenticationWindow.call(twitter, url, success, failure);
                 }, failure || undefined);
             }
 
             return this;
         },
-
+        
         /**
          * Deauthenticates a user
          */
@@ -165,7 +150,7 @@
                 hasSecret =  properties.getString('TwitterOAuthTokenSecret');
             }
 
-            return !(hasKey === null && hasSecret === null && hasKey === '' && hasSecret === '');
+            return (hasKey != false && hasSecret != false);
         },
 
         /**
@@ -509,7 +494,7 @@
         {
             if (!('id' in options))
             {
-                throw new Exception("Missing 'id' in retweet");
+                throw new Error("Missing 'id' in showMessage");
             }
 
             var url = OAuth.Twitter.API_URL +
@@ -633,7 +618,7 @@
 
             if (!status)
             {
-                throw new Exception("Missing 'status' in tweet");
+                throw new Error("Missing 'status' in tweet()");
             }
 
             var allowed_options = {
@@ -681,11 +666,11 @@
 
             if (!('status' in options))
             {
-                throw new Exception("Missing 'status' in statusUpdate");
+                throw new Error("Missing 'status' in tweetWithMedia()");
             }
             if (!('media' in options))
             {
-                throw new Exception("Missing 'status' in statusUpdate");
+                throw new Error("Missing 'status' in tweetWithMedia()");
             }
 
             var allowed_options = {
@@ -732,7 +717,7 @@
         {
             if (!id)
             {
-                throw new Exception("Missing 'id' in retweet");
+                throw new Error("Missing 'id' in retweet()");
             }
 
             var url = OAuth.Twitter.API_URL +
@@ -775,7 +760,7 @@
         {
             if (!id)
             {
-                throw new Exception("Missing 'id' in retweet");
+                throw new Error("Missing 'id' in destroyTweet()");
             }
 
             var url = OAuth.Twitter.API_URL +
@@ -813,19 +798,14 @@
         {
             if (!id)
             {
-                throw new Exception("Missing 'id' in retweet");
+                throw new Error("Missing 'id' in showTweet()");
             }
 
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
-                      OAuth.Twitter.API_DESTROY_TWEET +
+                      OAuth.Twitter.API_TWEET +
                       options.id + '.' +
                       OAuth.Twitter.API_FORMAT;
-
-            if (!('media' in options))
-            {
-                throw new Exception("Missing 'status' in statusUpdate");
-            }
 
             var allowed_options = {
                 'trimUser': 'trim_user',
@@ -854,7 +834,7 @@
              * Opens a modal browser pointing to the authentication page
              *
              */
-            showAuthenticationWindow: function (url, authenticateCallback)
+            showAuthenticationWindow: function (url, success, failure)
             {
                 var twitter = this;
                 var modal = Ti.UI.createWindow({id: "login_window_modal"});
@@ -879,10 +859,21 @@
                     if (url.indexOf('oauth_verifier') != -1)
                     {
                         webview.stopLoading();
-                        authenticateCallback.call(twitter, event);
+                        twitter.UI.hideAuthenticationWindow.call(twitter);
+                        
+                        var querystring = url.replace(twitter.oauth.callbackUrl + "?",  "");
+
+                        var query = twitter.oauth.parseTokenRequest(querystring);
+            
+                        twitter.oauth.setVerifier(query.oauth_verifier);
+                        twitter.oauth.fetchAccessToken(function (data) {
+                            twitter.storeToken.call(twitter);
+            
+                            success();
+                        }, failure);
                     }
                 });
-
+                
                 modal.open();
                 twitter.UI.modalLogin = modal;
             },
