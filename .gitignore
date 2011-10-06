@@ -3,4 +3,5 @@
 *~
 dist/
 chrome/
+chrome-test/
 tests/env.js
