@@ -17,8 +17,12 @@
         var accessTokenKey = properties.hasProperty("TwitterOAuthTokenKey") ? properties.getString("TwitterOAuthTokenKey") : "";
         var accessTokenSecret = properties.hasProperty("TwitterOAuthTokenSecret") ? properties.getString("TwitterOAuthTokenSecret") : "";
 
-        options.accessTokenKey = accessTokenKey;
-        options.accessTokenSecret = accessTokenSecret;
+        if (!('accessTokenKey' in options))
+        {
+            options.accessTokenKey = accessTokenKey;
+            options.accessTokenSecret = accessTokenSecret;
+        }
+
 
         options.requestTokenUrl = OAuth.Twitter.API_URL + OAuth.Twitter.API_OAUTH_REQUEST_TOKEN;
         options.authorizationUrl = OAuth.Twitter.API_URL + OAuth.Twitter.API_OAUTH_AUTHENTICATE;
@@ -62,6 +66,93 @@
     /** @const */ OAuth.Twitter.API_NEW_MESSAGE = '/direct_messages/new';
     /** @const */ OAuth.Twitter.API_MESSAGE = '/direct_messages/';
 
+
+    OAuth.Twitter.UI = (function () {
+        var wnd,
+            cancel_button = Titanium.UI.createButton({title: "Cancel"}),
+            successCallback,
+            failureCallback;
+
+        wnd = Titanium.UI.createWindow({
+            title:'Twitter',
+            leftNavButton: cancel_button
+        });
+
+        cancel_button.addEventListener('click', function (event) {
+            OAuth.Twitter.UI.hide();
+            if (failureCallback)
+            {
+                failureCallback('cancelled');
+            }
+        });
+
+        return {
+            /**
+             * Opens a modal browser pointing to the authentication page
+             *
+             */
+            show: function (url, success, failure) {
+                var twitter = this;
+                successCallback = success;
+                failureCallback = failure;
+
+
+                var webview = Ti.UI.createWebView({
+                    autoDetect: [Ti.UI.AUTODETECT_NONE],
+                    url: url
+                });
+                wnd.add(webview);
+
+                webview.addEventListener('load', function (event) {
+                    var url = event.url;
+                    if (url.indexOf('oauth_verifier') == -1 && url.indexOf('denied') == -1)
+                    {
+                        return;
+                    }
+
+                    if (url.indexOf('denied') != -1)
+                    {
+                        OAuth.Twitter.UI.hide();
+                        wnd.remove(webview);
+
+                        if (failureCallback)
+                        {
+                            failureCallback(url);
+                        }
+                        return;
+                    }
+
+                    if (url.indexOf('oauth_verifier') != -1)
+                    {
+                        OAuth.Twitter.UI.hide();
+                        wnd.remove(webview);
+
+                        if (successCallback)
+                        {
+                            successCallback(url);
+                        }
+
+                        return;
+                    }
+                });
+
+                wnd.open({
+                    modal:true,
+                    modalTransitionStyle: Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+                    modalStyle: Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET
+                });
+            },
+
+            /**
+             * Hide the modal browser pointing to the authentication page
+             *
+             */
+            hide: function () {
+                wnd.close();
+            }
+        };
+    })();
+
     OAuth.Twitter.prototype = {
 
         /**
@@ -98,13 +189,29 @@
             {
                 // normal authentication
                 twitter.oauth.fetchRequestToken(function (url) {
-                    twitter.UI.showAuthenticationWindow.call(twitter, url, success, failure);
-                }, failure || undefined);
+                    OAuth.Twitter.UI.show(url, function (url) {
+                        var querystring = url.substr(url.indexOf("?"));
+                        var query = twitter.oauth.parseTokenRequest(querystring);
+
+                        twitter.oauth.setVerifier(query.oauth_verifier);
+                        twitter.oauth.fetchAccessToken(function (data) {
+                            twitter.storeToken.call(twitter);
+
+                            success(data);
+                        }, failure);
+                    }, failure);
+                }, function (data) {
+                    OAuth.Twitter.UI.hide.call(twitter);
+                    if (failure)
+                    {
+                        failure(data);
+                    }
+                });
             }
 
             return this;
         },
-        
+
         /**
          * Deauthenticates a user
          */
@@ -150,7 +257,7 @@
                 hasSecret =  properties.getString('TwitterOAuthTokenSecret');
             }
 
-            return (hasKey != false && hasSecret != false);
+            return (hasKey !== false && hasSecret !== false);
         },
 
         /**
@@ -258,7 +365,7 @@
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_USER_TIMELINE + '.' +
                       OAuth.Twitter.API_FORMAT;
-                      
+
             var userId = parseInt(screenName, 10);
             if (userId == screenName)
             {
@@ -465,7 +572,6 @@
             };
 
             var data = handleOptions(options, allowed_options, defaults);
-            var success = options.success;
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
@@ -606,7 +712,7 @@
          * @param success {function} callback for a sucessful request
          * @param failure {function} callback for a failed request
          * @param options {object}
-         *      
+         *
          * @see https://dev.twitter.com/docs/api/1/post/statuses/update
          */
         tweet: function (status, success, failure, options)
@@ -654,7 +760,7 @@
          * @param success {function} callback for a sucessful request
          * @param failure {function} callback for a failed request
          * @param options {object}
-         *      
+         *
          * @see https://dev.twitter.com/docs/api/1/post/statuses/update_with_media
          */
         tweetWithMedia: function (status, media, success, failure, options)
@@ -694,7 +800,6 @@
             };
 
             var data = handleOptions(options, allowed_options, defaults);
-            var success = options.success;
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
@@ -710,7 +815,7 @@
          * @param success {function} callback for a sucessful request
          * @param failure {function} callback for a failed request
          * @param options {object}
-         *      
+         *
          * @see https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid
          */
         retweet: function (id, success, failure, options)
@@ -737,7 +842,6 @@
             };
 
             var data = handleOptions(options, allowed_options, defaults);
-            var success = options.success;
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
@@ -753,7 +857,7 @@
          * @param success {function} callback for a sucessful request
          * @param failure {function} callback for a failed request
          * @param options {object}
-         *      
+         *
          * @see https://dev.twitter.com/docs/api/1/post/statuses/destroy/%3Aid
          */
         destroyTweet: function (id, success, failure, options)
@@ -780,7 +884,6 @@
             };
 
             var data = handleOptions(options, allowed_options, defaults);
-            var success = options.success;
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
@@ -818,74 +921,12 @@
             };
 
             var data = handleOptions(options, allowed_options, defaults);
-            var success = options.success;
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
             }, options.failure);
 
             return this;
-        },
-
-        UI: {
-            modalLogin: null,
-
-            /**
-             * Opens a modal browser pointing to the authentication page
-             *
-             */
-            showAuthenticationWindow: function (url, success, failure)
-            {
-                var twitter = this;
-                var modal = Ti.UI.createWindow({id: "login_window_modal"});
-
-                var view = Ti.UI.createView({id: "rounded-window"});
-                var webview = Ti.UI.createWebView({
-                    autoDetect: [Ti.UI.AUTODETECT_NONE],
-                    borderRadius: 6,
-                    left: 10,
-                    right: 10,
-                    top: 10,
-                    bottom: 10,
-                    url: url
-                });
-
-
-                view.add(webview);
-                modal.add(view);
-
-                webview.addEventListener('load', function (event) {
-                    var url = event.url;
-                    if (url.indexOf('oauth_verifier') != -1)
-                    {
-                        webview.stopLoading();
-                        twitter.UI.hideAuthenticationWindow.call(twitter);
-                        
-                        var querystring = url.replace(twitter.oauth.callbackUrl + "?",  "");
-
-                        var query = twitter.oauth.parseTokenRequest(querystring);
-            
-                        twitter.oauth.setVerifier(query.oauth_verifier);
-                        twitter.oauth.fetchAccessToken(function (data) {
-                            twitter.storeToken.call(twitter);
-            
-                            success();
-                        }, failure);
-                    }
-                });
-                
-                modal.open();
-                twitter.UI.modalLogin = modal;
-            },
-
-            /**
-             * Closes a modal browser
-             *
-             */
-            hideAuthenticationWindow: function ()
-            {
-                this.UI.modalLogin.hide();
-            }
         }
     };
 
