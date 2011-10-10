@@ -5,7 +5,7 @@ require("lib/jsOAuth/jsOAuth_Twitter.js");
 require("env.js");
 
 // tests
-requore("spec/mainSpec.js");
+require("spec/mainSpec.js");
 
 var jasmineEnv = jasmine.getEnv();
 jasmineEnv.execute();
