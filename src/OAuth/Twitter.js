@@ -166,7 +166,7 @@
          */
         authenticate: function (success, failure, options)
         {
-            var options = options || {};
+            options = options || {};
             var twitter = this;
             if (!success)
             {
@@ -271,6 +271,7 @@
          */
         verifyCredentials: function (success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_VARIFY_CREDENTIALS + '.' +
@@ -280,7 +281,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -306,12 +307,16 @@
          */
         homeTimeline: function (sinceId, success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_HOME_TIMELINE + '.' +
                       OAuth.Twitter.API_FORMAT;
 
-            options.sinceid = sinceId;
+            if (sinceId !== null)
+            {
+                options.sinceid = sinceId;
+            }
 
             var allowed_options = {
                 'sinceId': 'since_id',
@@ -335,7 +340,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -361,6 +366,7 @@
          */
         userTimeline: function (screenName, sinceId, success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_USER_TIMELINE + '.' +
@@ -399,7 +405,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -436,7 +442,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -462,6 +468,7 @@
          */
         mentions: function (success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
                       OAuth.Twitter.API_MENTIONS + '.' +
@@ -488,7 +495,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -511,6 +518,7 @@
          */
         messages: function (success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
                       OAuth.Twitter.API_MESSAGES + '.' +
@@ -532,7 +540,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -555,6 +563,7 @@
          */
         createMessage: function (success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
                       OAuth.Twitter.API_NEW_MESSAGE + '.' +
@@ -575,7 +584,7 @@
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
-            }, options.failure);
+            }, failure);
 
             return this;
         },
@@ -596,24 +605,21 @@
          *
          * @see https://dev.twitter.com/docs/api/1/post/direct_messages/new
          */
-        showMessage: function (success, failure, options)
+        showMessage: function (id, success, failure, options)
         {
-            if (!('id' in options))
-            {
-                throw new Error("Missing 'id' in showMessage");
-            }
+            options = options || {};
 
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
                       OAuth.Twitter.API_MESSAGE +
-                      options.id + '.' +
+                      id + '.' +
                       OAuth.Twitter.API_FORMAT;
 
             var allowed_options = {}, defaults = {};
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -636,6 +642,7 @@
          */
         retweets: function (success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
                       OAuth.Twitter.API_RETWEETS_OF_ME + '.' +
@@ -657,7 +664,7 @@
             url += optionsToQueryString(options, allowed_options, defaults);
 
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -680,6 +687,7 @@
          */
         retweetsByMe: function (success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VESRION +
                       OAuth.Twitter.API_RETWEETED_BY_ME + '.' +
@@ -700,7 +708,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -717,6 +725,7 @@
          */
         tweet: function (status, success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_STATUS_UPDATE + '.' +
@@ -747,7 +756,7 @@
 
             url += optionsToQueryString(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, options.success, options.failure);
+            this.oauth.getJSON(url, success, failure);
 
             return this;
         },
@@ -765,6 +774,7 @@
          */
         tweetWithMedia: function (status, media, success, failure, options)
         {
+            options = options || {};
             var url = OAuth.Twitter.API_UPLOAD_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_STATUS_UPDATE_WITH_MEDIA + '.' +
@@ -820,6 +830,7 @@
          */
         retweet: function (id, success, failure, options)
         {
+            options = options || {};
             if (!id)
             {
                 throw new Error("Missing 'id' in retweet()");
@@ -828,7 +839,7 @@
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_RETWEET +
-                      options.id + '.' +
+                      id + '.' +
                       OAuth.Twitter.API_FORMAT;
 
             var allowed_options = {
@@ -845,7 +856,7 @@
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
-            }, options.failure);
+            }, failure);
 
             return this;
         },
@@ -862,6 +873,7 @@
          */
         destroyTweet: function (id, success, failure, options)
         {
+            options = options || {};
             if (!id)
             {
                 throw new Error("Missing 'id' in destroyTweet()");
@@ -870,7 +882,7 @@
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_DESTROY_TWEET +
-                      options.id + '.' +
+                      id + '.' +
                       OAuth.Twitter.API_FORMAT;
 
             var allowed_options = {
@@ -887,7 +899,7 @@
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
-            }, options.failure);
+            }, failure);
 
             return this;
         },
@@ -899,6 +911,7 @@
          */
         showTweet: function (id, success, failure, options)
         {
+            options = options || {};
             if (!id)
             {
                 throw new Error("Missing 'id' in showTweet()");
@@ -907,7 +920,7 @@
             var url = OAuth.Twitter.API_URL +
                       OAuth.Twitter.API_VERSION +
                       OAuth.Twitter.API_TWEET +
-                      options.id + '.' +
+                      id + '.' +
                       OAuth.Twitter.API_FORMAT;
 
             var allowed_options = {
@@ -924,7 +937,7 @@
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
-            }, options.failure);
+            }, failure);
 
             return this;
         }
@@ -958,9 +971,7 @@
         var data = handleOptions(options, allowed_options, defaults), query = [], i;
         for (i in data)
         {
-            if (data.hasOwnPropery(i)) {
-                query.push(i + "=" + data[i]);
-            }
+            query.push(i + "=" + data[i]);
         }
 
         return '?' + query.join("&");
