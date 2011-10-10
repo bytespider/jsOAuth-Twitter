@@ -1,3 +1,0 @@
-[submodule "tests/lib/jsOAuth"]
-	path = tests/lib/jsOAuth
-	url = git@github.com:bytespider/jsOAuth.git
