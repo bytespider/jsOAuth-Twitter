@@ -41,23 +41,20 @@
 
                 {{ content }}
 
-                {% if site.navigation[0].subnavigation %}
                 <nav id="sub-navigation">
+                {% for group in site.api_navigation %}
+                <h3>{{ group.text }}</h3>
                 <ul>
-                {% for subitem in site.navigation[0].subnavigation %}
-                    <li {% if subitem.text == page.title %} class="active" {% endif %}>
-                        {% if subitem.url %}
-                        <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ subitem.title }}"{% endif %}>
-                        {% endif %}
-                        {{ subitem.text }}
-                        {% if subitem.url %}
+                {% for item in group.items %}
+                    <li {% if item.text == page.title %} class="active" {% endif %}>
+                        <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>
+                        {{ item.text }}
                         </a>
-                        {% endif %}
                     </li>
                 {% endfor %}
                 </ul>
+                {% endfor %}
                 </nav>
-                {% endif %}
 
                 <a href="http://github.com/bytespider/jsOAuth-Twitter"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
             </div>
