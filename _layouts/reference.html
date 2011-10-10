@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+    <head>
+        <title>{{ page.title }} - jsOAuth Twitter Manual & Documentation</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="{{ page.description }}">
+        <meta name="author" content="{% if page.author %}{{ page.author }}{% else %}Rob Griffiths{% endif %}">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <meta name="viewport" content="width=device-width" />
+
+        <link rel="stylesheet" href="http://{{ site.url }}/css/style.css?v=2" type="text/css" media="screen, projection, handheld">
+        <link rel="stylesheet" href="http://{{ site.url }}/css/print.css?v=2" type="text/css" media="print">
+        <link rel="icon" href="favicon.ico">
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <h1>{{ page.title }}</h1>
+            </header>
+            <div id="main">
+                <nav id="navigation">
+                    <ul>
+                    {% for item in site.navigation %}
+                        <li {% if item.text == page.title %} class="active" {% endif %}>
+                            {% if item.url %}
+                            <a href="http://{{ site.url }}{{ item.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>
+                            {% endif %}
+                            {{ item.text }}
+                            {% if item.url %}
+                            </a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </nav>
+
+                {{ content }}
+
+                {% for item in site.navigation %}
+                {% if item.text == page.title %}
+                    {% if item.subnavigation %}
+                    <nav id="sub-navigation">
+                    <ul>
+                    {% for subitem in item.subnavigation %}
+                        <li {% if subitem.text == page.title %} class="active" {% endif %}>
+                            {% if subitem.url %}
+                            <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ subitem.title }}"{% endif %}>
+                            {% endif %}
+                            {{ subitem.text }}
+                            {% if subitem.url %}
+                            </a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    </nav>
+                    {% endif %}
+                {% endif %}
+                {% endfor %}
+
+                <a href="http://github.com/bytespider/jsOAuth-Twitter"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+            </div>
+            <footer>
+                <p>Copyright 2011</p>
+            </footer>
+        </div>
+        <!--script src="http://{{ site.url }}/js/script.js" type="text/javascript"></script-->
+
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            try {
+                var pageTracker = _gat._getTracker("UA-16774320-6");
+                pageTracker._trackPageview();
+            } catch(err) {}
+        </script>
+    </body>
+</html>
