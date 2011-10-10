@@ -41,27 +41,23 @@
 
                 {{ content }}
 
-                {% for item in site.navigation %}
-                {% if item.text == page.title %}
-                    {% if item.subnavigation %}
-                    <nav id="sub-navigation">
-                    <ul>
-                    {% for subitem in item.subnavigation %}
-                        <li {% if subitem.text == page.title %} class="active" {% endif %}>
-                            {% if subitem.url %}
-                            <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ subitem.title }}"{% endif %}>
-                            {% endif %}
-                            {{ subitem.text }}
-                            {% if subitem.url %}
-                            </a>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                    </nav>
-                    {% endif %}
-                {% endif %}
+                {% if site.navigation.0.subnavigation %}
+                <nav id="sub-navigation">
+                <ul>
+                {% for subitem in item.subnavigation %}
+                    <li {% if subitem.text == page.title %} class="active" {% endif %}>
+                        {% if subitem.url %}
+                        <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ subitem.title }}"{% endif %}>
+                        {% endif %}
+                        {{ subitem.text }}
+                        {% if subitem.url %}
+                        </a>
+                        {% endif %}
+                    </li>
                 {% endfor %}
+                </ul>
+                </nav>
+                {% endif %}
 
                 <a href="http://github.com/bytespider/jsOAuth-Twitter"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
             </div>
