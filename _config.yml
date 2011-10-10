@@ -6,4 +6,7 @@ navigation:
     url: "/"
   - text: "API Reference"
     url: "/api-reference"
+      - text: "Core"
+          - text: "OAuth.Twitter"
+            url: "/api-reference/OAuth-Twitter"
 package_version: 0.1.0
