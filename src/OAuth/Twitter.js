@@ -736,6 +736,8 @@
                 throw new Error("Missing 'status' in tweet()");
             }
 
+            options.status = status;
+
             var allowed_options = {
                 'status': 'status',
                 'inReplyTo': 'in_reply_to_status_id',
@@ -754,9 +756,11 @@
                 'wrapLinks': true
             };
 
-            url += optionsToQueryString(options, allowed_options, defaults);
+            var data = handleOptions(options, allowed_options, defaults);
 
-            this.oauth.getJSON(url, success, failure);
+            this.oauth.post(url, data, function (data) {
+                success(JSON.parse(data.text));
+            }, failure);
 
             return this;
         },
@@ -789,6 +793,9 @@
                 throw new Error("Missing 'status' in tweetWithMedia()");
             }
 
+            options.status = status;
+            options.media = media;
+
             var allowed_options = {
                 'status': 'status',
                 'media': 'media',
@@ -813,7 +820,7 @@
 
             this.oauth.post(url, data, function (data) {
                 success(JSON.parse(data.text));
-            });
+            }, failure);
 
             return this;
         },
