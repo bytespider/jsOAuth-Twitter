@@ -1,7 +1,11 @@
-Ti.include('lib/titanium-jasmine/jasmine-1.0.2');
-Ti.include('lib/titanium-jasmine/jasmine-titanium');
+require("lib/jasmine-core/jasmine.js");
 
-Ti.include('spec/mainSpec.js');
+require("lib/jsOAuth/jsOAuth.js");
+require("lib/jsOAuth/jsOAuth_Twitter.js");
+require("env.js");
 
-jasmine.getEnv().addReporter(new jasmine.TitaniumReporter());
-jasmine.getEnv().execute();
+// tests
+requore("spec/mainSpec.js");
+
+var jasmineEnv = jasmine.getEnv();
+jasmineEnv.execute();
