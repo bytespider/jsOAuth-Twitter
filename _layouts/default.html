@@ -36,13 +36,13 @@
                             {% endif %}
                             {% if item.subnavigation %}
                             <ul>
-                            {% for item in site.navigation %}
-                                <li {% if item.text == page.title %} class="active" {% endif %}>
-                                    {% if item.url %}
-                                    <a href="http://{{ site.url }}{{ item.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>
+                            {% for subitem in item.subnavigation %}
+                                <li {% if subitem.text == page.title %} class="active" {% endif %}>
+                                    {% if subitem.url %}
+                                    <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ subitem.title }}"{% endif %}>
                                     {% endif %}
-                                    {{ item.text }}
-                                    {% if item.url %}
+                                    {{ subitem.text }}
+                                    {% if subitem.url %}
                                     </a>
                                     {% endif %}
                                 </li>
