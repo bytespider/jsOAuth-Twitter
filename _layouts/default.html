@@ -27,7 +27,28 @@
                     <ul>
                     {% for item in site.navigation %}
                         <li {% if item.text == page.title %} class="active" {% endif %}>
-                            <a href="http://{{ site.url }}{{ item.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>{{ item.text }}</a>
+                            {% if item.url %}
+                            <a href="http://{{ site.url }}{{ item.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>
+                            {% endif %}
+                            {{ item.text }}
+                            {% if item.url %}
+                            </a>
+                            {% endif %}
+                            {% if item.subnavigation %}
+                            <ul>
+                            {% for item in site.navigation %}
+                                <li {% if item.text == page.title %} class="active" {% endif %}>
+                                    {% if item.url %}
+                                    <a href="http://{{ site.url }}{{ item.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>
+                                    {% endif %}
+                                    {{ item.text }}
+                                    {% if item.url %}
+                                    </a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
                         </li>
                     {% endfor %}
                     </ul>
