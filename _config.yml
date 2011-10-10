@@ -7,14 +7,22 @@ navigation:
   - text: "API Reference"
     url: "/api-reference"
 api_navigation:
-  - text: "Core"
+  - text: "Initialisation"
     items:
       - text: "OAuth.Twitter"
         url: "/api-reference/oauth-twitter"
+  - text: "Authentication"
+    items:
       - text: "authenticate"
         url: "/api-reference/authenticate"
       - text: "deauthenticate"
         url: "/api-reference/deauthenticate"
+  - text: "Timelines"
+    items:
+      - text: "varifyCredentials"
+        url: "/api-reference/varify-credentials"
+  - text: "Tweeting"
+    items:
       - text: "varifyCredentials"
         url: "/api-reference/varify-credentials"
 package_version: 0.1.0
