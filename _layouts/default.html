@@ -34,21 +34,6 @@
                             {% if item.url %}
                             </a>
                             {% endif %}
-                            {% if item.subnavigation %}
-                            <ul>
-                            {% for subitem in item.subnavigation %}
-                                <li {% if subitem.text == page.title %} class="active" {% endif %}>
-                                    {% if subitem.url %}
-                                    <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ subitem.title }}"{% endif %}>
-                                    {% endif %}
-                                    {{ subitem.text }}
-                                    {% if subitem.url %}
-                                    </a>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                            </ul>
-                            {% endif %}
                         </li>
                     {% endfor %}
                     </ul>
