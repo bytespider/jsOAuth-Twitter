@@ -17,8 +17,6 @@ api_navigation:
         url: "/api-reference/signedIn.html"
       - text: "authenticate"
         url: "/api-reference/authenticate.html"
-      - text: "deauthenticate"
-        url: "/api-reference/deauthenticate.html"
   - text: "Timelines"
     items:
       - text: "homeTimeline"
