@@ -89,6 +89,11 @@ nav#sub-navigation {
     width: 166px;
 }
 
+.content {
+    float: left;
+    margin-left: 186px;
+}
+
 #container {
     width:800px;
     font-size:1.3em;
