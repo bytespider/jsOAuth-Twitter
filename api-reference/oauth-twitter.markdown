@@ -1,7 +1,7 @@
 ---
 layout: reference
 title: "OAuth.Twitter"
-description: ""
+description: "Construct a new jsOAuth Twitter client - jsOAuth Twitter API reference"
 ---
 
 ##Overview##
