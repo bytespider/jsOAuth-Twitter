@@ -12,7 +12,7 @@ signedIn() checks if the user is already authenticated.
 
 if (twitter.signedIn() === true)
 {
-    sucessfulAuthentication();
+    successfulAuthentication();
 }
 
 {% endhighlight %}
