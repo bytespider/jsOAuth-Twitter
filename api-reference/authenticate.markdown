@@ -41,7 +41,7 @@ else
         <tr>
             <td class="name">options</td><td>Object</td>
             <td>
-                (optional) Options to set up the client
+                (optional, experimental) Options to defined the user to log in via xAuth
                 <table>
                     <thead>
                         <tr><th>Name</th><th>Type</th><th>Description</th></tr>
