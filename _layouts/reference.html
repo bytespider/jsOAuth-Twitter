@@ -47,7 +47,7 @@
                 <ul>
                 {% for item in group.items %}
                     <li {% if item.text == page.title %} class="active" {% endif %}>
-                        <a href="http://{{ site.url }}{{ subitem.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>
+                        <a href="http://{{ site.url }}{{ item.url }}"{% if item.title %}title="{{ item.title }}"{% endif %}>
                         {{ item.text }}
                         </a>
                     </li>
