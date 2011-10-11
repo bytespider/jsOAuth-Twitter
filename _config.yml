@@ -27,6 +27,6 @@ api_navigation:
         url: "/api-reference/userTimeline.html"
   - text: "Tweeting"
     items:
-      - text: "varifyCredentials"
-        url: "/api-reference/varifyCredentials"
+      - text: "tweet"
+        url: "/api-reference/tweet.html"
 package_version: 0.1.0
