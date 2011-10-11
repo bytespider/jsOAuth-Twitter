@@ -25,8 +25,6 @@ api_navigation:
         url: "/api-reference/homeTimeline.html"
       - text: "userTimeline"
         url: "/api-reference/userTimeline.html"
-      - text: "publicTimeline"
-        url: "/api-reference/publicTimeline.html"
   - text: "Tweeting"
     items:
       - text: "varifyCredentials"
