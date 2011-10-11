@@ -84,6 +84,11 @@ a:hover, #navigation li a:hover, footer a {
     text-decoration:none
 }
 
+nav#sub-navigation {
+    float: left;
+    width: 166px;
+}
+
 #container {
     width:800px;
     font-size:1.3em;
