@@ -1,5 +1,6 @@
 article, aside, figure, footer, header, hgroup, menu, nav, section {
-    display:block
+    display:block;
+    clear:both;
 }
 
 html {
@@ -104,11 +105,11 @@ a:hover, #navigation li a:hover, footer a {
 }
 
 nav#sub-navigation {
+    float: left;
     width: 20%;
 }
 
 .content {
-    float: left;
     padding: 0 5% 0 0;
     width: 75%;
 }
