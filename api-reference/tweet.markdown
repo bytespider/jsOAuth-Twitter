@@ -21,7 +21,8 @@ function failure(data)
     notify('tweet failed to be posted.')
 }
 
-twitter.tweet("jsOAuth Twitter is a cool module for jsOAuth the javscript OAuth library", success, failure);
+var status = "jsOAuth Twitter is a cool module for jsOAuth the javscript OAuth library";
+twitter.tweet(status, success, failure);
 
 {% endhighlight %}
 
