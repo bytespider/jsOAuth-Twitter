@@ -10,7 +10,7 @@ api_navigation:
   - text: "Initialisation"
     items:
       - text: "OAuth.Twitter"
-        url: "/api-reference/oauth-twitter"
+        url: "/api-reference/oauth-twitter.html"
   - text: "Authentication"
     items:
       - text: "authenticate"
