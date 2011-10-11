@@ -79,6 +79,11 @@ table td, table th {
     vertical-align: top;
 }
 
+table td.name {
+    font:monospace;
+    color: #A6E22E;
+}
+
 #navigation ul {
     padding:0 8px;
     margin:0;
