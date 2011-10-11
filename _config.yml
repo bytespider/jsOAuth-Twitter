@@ -14,15 +14,19 @@ api_navigation:
   - text: "Authentication"
     items:
       - text: "authenticate"
-        url: "/api-reference/authenticate"
+        url: "/api-reference/authenticate.html"
       - text: "deauthenticate"
-        url: "/api-reference/deauthenticate"
+        url: "/api-reference/deauthenticate.html"
   - text: "Timelines"
     items:
-      - text: "varifyCredentials"
-        url: "/api-reference/varify-credentials"
+      - text: "homeTimeline"
+        url: "/api-reference/homeTimeline.html"
+      - text: "userTimeline"
+        url: "/api-reference/userTimeline.html"
+      - text: "publicTimeline"
+        url: "/api-reference/publicTimeline.html"
   - text: "Tweeting"
     items:
       - text: "varifyCredentials"
-        url: "/api-reference/varify-credentials"
+        url: "/api-reference/varifyCredentials"
 package_version: 0.1.0
