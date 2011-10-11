@@ -4,7 +4,6 @@ title: "authenticate"
 description: ""
 ---
 
-#authenticate#
 ##Overview##
 authenticate() prompts the user to authorise your application.
 
