@@ -36,9 +36,9 @@ else
         <tr><th>Name</th><th>Type</th><th>Description</th></tr>
     </thead>
     <tbody>
+        <tr><td class="name">success</td><td>Function</td><td>Function called after successful authentication</td></tr>
+        <tr><td class="name">failure</td><td>Function</td><td>Function called on failed or cancelled authentication</td></tr>
         <tr>
-            <td class="name">success</td><td>Function</td><td>Function called after successful authentication</td>
-            <td class="name">failure</td><td>Function</td><td>Function called on failed or cancelled authentication</td>
             <td class="name">options</td><td>Object</td>
             <td>
                 (optional) Options to set up the client
