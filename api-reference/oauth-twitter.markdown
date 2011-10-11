@@ -1,10 +1,9 @@
 ---
 layout: reference
-title: "OAuth.Twitter constructor"
+title: "OAuth.Twitter"
 description: ""
 ---
 
-#OAuth.Twitter#
 ##Overview##
 OAuth.Twitter() constructs a twitter client connection.
 
@@ -23,7 +22,7 @@ var twitter = OAuth.Twitter({
     </thead>
     <tbody>
         <tr>
-            <td>options</td><td>Object</td>
+            <td class="name">options</td><td>Object</td>
             <td>
                 Options to set up the client
                 <table>
@@ -31,10 +30,10 @@ var twitter = OAuth.Twitter({
                         <tr><th>Name</th><th>Type</th><th>Description</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>consumerKey</td><td>String</td><td>Your consumer key</td></tr>
-                        <tr><td>consumerSecret</td><td>String</td><td>Your consumer key</td></tr>
-                        <tr><td>accessTokenKey</td><td>String</td><td>(optional) reload with a pre-generated accessToken key</td></tr>
-                        <tr><td>accessTokenSecret</td><td>String</td><td>(optional) reload with a pre-generated accessToken secret</td></tr>
+                        <tr><td class="name">consumerKey</td><td>String</td><td>Your consumer key</td></tr>
+                        <tr><td class="name">consumerSecret</td><td>String</td><td>Your consumer key</td></tr>
+                        <tr><td class="name">accessTokenKey</td><td>String</td><td>(optional) reload with a pre-generated accessToken key</td></tr>
+                        <tr><td class="name">accessTokenSecret</td><td>String</td><td>(optional) reload with a pre-generated accessToken secret</td></tr>
                     </tbody>
                 </table>
             </td>
