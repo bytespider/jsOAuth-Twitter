@@ -9,7 +9,7 @@ authenticate() prompts the user to authorise your application.
 
 ##Example##
 {% highlight javascript linenos %}
-function sucessfulAuthentication()
+function successfulAuthentication()
 {
     // fetch the users home timeline
 }
@@ -21,11 +21,11 @@ function failedAuthentication()
 
 if (twitter.signedIn() === true)
 {
-    sucessfulAuthentication();
+    successfulAuthentication();
 }
 else
 {
-    twitter.authenticate(sucessfulAuthentication, failedAuthentication);
+    twitter.authenticate(successfulAuthentication, failedAuthentication);
 }
 
 {% endhighlight %}
@@ -41,7 +41,7 @@ else
         <tr>
             <td class="name">options</td><td>Object</td>
             <td>
-                (optional, experimental) Options to defined the user to log in via xAuth
+                (optional, experimental) Options to define the user to log in via xAuth
                 <table>
                     <thead>
                         <tr><th>Name</th><th>Type</th><th>Description</th></tr>
