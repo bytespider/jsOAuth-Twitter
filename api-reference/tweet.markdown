@@ -47,7 +47,7 @@ twitter.tweet(status, success, failure);
                         <tr><td class="name">inReplyTo</td><td>Integer</td><td>The ID of an existing status that the update is in reply to.</td></tr>
                         <tr><td class="name">lat</td><td>Float</td><td>The latitude of the location this tweet refers to.</td></tr>
                         <tr><td class="name">long</td><td>Float</td><td>The longitude of the location this tweet refers to.</td></tr>
-                        <tr><td class="name">place</td><td>String</td><td>A place in the world. These IDs can be retrieved from [GET geo/reverse_geocode](https://dev.twitter.com/docs/api/1/get/geo/reverse_geocode)</td></tr>
+                        <tr><td class="name">place</td><td>String</td><td>A place in the world. These IDs can be retrieved from <a href="https://dev.twitter.com/docs/api/1/get/geo/reverse_geocode">GET geo/reverse_geocode</a></td></tr>
                         <tr><td class="name">displayCoordinates</td><td>Boolean</td><td>Whether or not to put a pin on the exact coordinates a tweet has been sent from.</td></tr>
                         <tr><td class="name">trimUser</td><td>Boolean</td><td>When set to <code>true</code>, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Default: <code>true</code></td></tr>
                         <tr><td class="name">includeEntities</td><td>Boolean</td><td>When set to <code>true</code>, each tweet will include a node called "entities". Default <code>true</code></td></tr>
