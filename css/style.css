@@ -107,6 +107,7 @@ a:hover, #navigation li a:hover, footer a {
 nav#sub-navigation {
     float: left;
     width: 20%;
+    clear: none;
     background:none;
     -webkit-border-radius:0;
     -moz-border-radius:0;
