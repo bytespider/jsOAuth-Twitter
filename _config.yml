@@ -13,6 +13,8 @@ api_navigation:
         url: "/api-reference/oauth-twitter.html"
   - text: "Authentication"
     items:
+      - text: "signedIn"
+        url: "/api-reference/signedIn.html"
       - text: "authenticate"
         url: "/api-reference/authenticate.html"
       - text: "deauthenticate"
