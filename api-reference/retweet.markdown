@@ -21,7 +21,7 @@ function failure(data)
     notify('tweet failed to be posted.')
 }
 
-twitter.retweet(id, success, failure);
+twitter.retweet(12346, success, failure);
 
 {% endhighlight %}
 
