@@ -49,3 +49,5 @@ img {
     -o-border-radius: 8px;
     border-radius: 8px;
 }
+
+[style~="absolute"] { display: none; }
