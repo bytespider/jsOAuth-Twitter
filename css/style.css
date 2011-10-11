@@ -6,7 +6,6 @@ html {
     background:#E7E7E7;
     color:#4C4C4C;
     font-family:Georgia,sans-serif;
-    background-image:url(http://image.static.bytespider.eu/images/noise.png);
     text-rendering:optimizeLegibility;
 }
 
@@ -63,6 +62,21 @@ a {
     -moz-transition:color .3s ease-out;
     -o-transition:color .3s ease-out;
     transition:color .3s ease-out
+}
+
+table {
+    border-color: #DDD;
+    border-collapse: collapse;
+}
+
+table td, table th {
+    border: 1px solid #DDD;
+    text-align: left;
+    padding: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 10px;
+    vertical-align: top;
 }
 
 #navigation ul {
