@@ -48,11 +48,11 @@ twitter.homeTimeline(12345, success, failure);
                         <tr><td class="name">count</td><td>Integer</td><td>Specifies the number of records to retrieve. Must be less than or equal to 200.</td></tr>
                         <tr><td class="name">maxId</td><td>Integer</td><td>Returns results with an ID less than (that is, older than) or equal to the specified ID.</td></tr>
                         <tr><td class="name">page</td><td>Integer</td><td>Specifies the page of results to retrieve.</td></tr>
-                        <tr><td class="name">trimUser</td><td>Boolean</td><td>AWhen set to `true`, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Default: `true`</td></tr>
-                        <tr><td class="name">includeRetweets</td><td>Boolean</td><td>When set to either true,the timeline will contain native retweets (if they exist) in addition to the standard stream of tweets. Default: `true`</td></tr>
-                        <tr><td class="name">includeEntities</td><td>Boolean</td><td>When set to either `true`, each tweet will include a node called "entities". Default `true`</td></tr>
-                        <tr><td class="name">excludeReplies</td><td>Boolean</td><td>This parameter will prevent replies from appearing in the returned timeline. Default `false`</td></tr>
-                        <tr><td class="name">contributorDetails</td><td>Boolean</td><td>This parameter enhances the contributors element of the status response to include the screen_name of the contributor. Default: `true`</td></tr>
+                        <tr><td class="name">trimUser</td><td>Boolean</td><td>When set to <code>true<code>, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Default: <code>true<code></td></tr>
+                        <tr><td class="name">includeRetweets</td><td>Boolean</td><td>When set to <code>true<code>,the timeline will contain native retweets (if they exist) in addition to the standard stream of tweets. Default: <code>true<code></td></tr>
+                        <tr><td class="name">includeEntities</td><td>Boolean</td><td>When set to <code>true<code>, each tweet will include a node called "entities". Default <code>true<code></td></tr>
+                        <tr><td class="name">excludeReplies</td><td>Boolean</td><td>This parameter will prevent replies from appearing in the returned timeline. Default <code>false<code></td></tr>
+                        <tr><td class="name">contributorDetails</td><td>Boolean</td><td>This parameter enhances the contributors element of the status response to include the screen_name of the contributor. Default: <code>true<code></td></tr>
                     </tbody>
                 </table>
             </td>
