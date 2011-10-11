@@ -1,5 +1,61 @@
 ---
 layout: reference
 title: "homeTimeline"
-description: ""
+description: "Fetch the authenticated users home timeline - jsOAuth Twitter API reference"
 ---
+
+##Overview##
+homeTimeline() fetches the authenticated users home timeline.
+
+##Example##
+{% highlight javascript linenos %}
+function success(data)
+{
+    // display the user's timeline
+    for (var i = 0; i < data.length; i++)
+    {
+        displayTweet(data[i]);
+    }
+}
+
+function failure(data)
+{
+    // warn the user
+}
+
+twitter.homeTimeline(12345, success, failure);
+
+{% endhighlight %}
+
+##Parameters##
+<table>
+    <thead>
+        <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr><td class="name">sinceId</td><td>Integer</td><td>Returns results with an ID greater than (that is, more recent than) the specified ID. Can be `null`</td></tr>
+        <tr><td class="name">success</td><td>Function</td><td>Function called after successfully fetching the timeline</td></tr>
+        <tr><td class="name">failure</td><td>Function</td><td>Function called when the fetch fails</td></tr>
+        <tr>
+            <td class="name">options</td><td>Object</td>
+            <td>
+                (optional) Options to modify the resulting JSON response
+                <table>
+                    <thead>
+                        <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="name">count</td><td>Integer</td><td>Specifies the number of records to retrieve. Must be less than or equal to 200.</td></tr>
+                        <tr><td class="name">maxId</td><td>Integer</td><td>Returns results with an ID less than (that is, older than) or equal to the specified ID.</td></tr>
+                        <tr><td class="name">page</td><td>Integer</td><td>Specifies the page of results to retrieve.</td></tr>
+                        <tr><td class="name">trimUser</td><td>Boolean</td><td>AWhen set to `true`, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Default: `true`</td></tr>
+                        <tr><td class="name">includeRetweets</td><td>Boolean</td><td>When set to either true,the timeline will contain native retweets (if they exist) in addition to the standard stream of tweets. Default: `true`</td></tr>
+                        <tr><td class="name">includeEntities</td><td>Boolean</td><td>When set to either `true`, each tweet will include a node called "entities". Default `true`</td></tr>
+                        <tr><td class="name">excludeReplies</td><td>Boolean</td><td>This parameter will prevent replies from appearing in the returned timeline. Default `false`</td></tr>
+                        <tr><td class="name">contributorDetails</td><td>Boolean</td><td>This parameter enhances the contributors element of the status response to include the screen_name of the contributor. Default: `true`</td></tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
