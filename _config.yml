@@ -27,4 +27,6 @@ api_navigation:
     items:
       - text: "tweet"
         url: "/api-reference/tweet.html"
+      - text: "retweet"
+        url: "/api-reference/retweet.html"
 package_version: 0.1.0
